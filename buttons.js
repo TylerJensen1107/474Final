@@ -1,7 +1,8 @@
 var scales = {
-    'Cmaj' : ['A','B','C','D','E','F','G','H'],
+    'Cmaj' : ['C','D','E','F','G','A','B','C'],
     'Cmin' : ['I','J','K','L','M','N','O','P']
 };
+
 var currScale;
 var defaultScale = 'Cmaj';
 
@@ -17,17 +18,19 @@ function loadKeyboard() {
     for (var i = 0; i < currScale.length; i++) {
         var currNote = currScale[i];
         var note = $('<div class=key id=note' + currNote + '>' + '<span>' + currNote + '</span>' + '</div>');
-        note.click(notePress);
+        note.click(notePress.bind(undefined, i));
         note.prop("index",i);
         note.appendTo('#keyboardContainer');
     }
 }
 
-function notePress() {
-    alert($(this).html() + $(this).prop("index"));
+function notePress(index, event) {
+    actOnKey(index);
 }
 
 $(document).ready(function() {
     changeScale(defaultScale);
     loadKeyboard();
 });
+
+

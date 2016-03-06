@@ -41,6 +41,7 @@ var isEmpty = function(obj) {
 }
 
 function playNote(note, frequency) {
+    console.log(note);
   oscillators[note].frequency.value = frequency;
   gains[note].gain.value = 1;
   pressed_keys[note] = true;
@@ -69,6 +70,7 @@ document.onkeydown = function(e){
 }
 
 function actOnKey(key) { 
+    console.log(key);
     if(!pressed_keys[key])
         playNote(key, frequencyOf[key]);
     else
