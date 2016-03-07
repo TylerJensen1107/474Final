@@ -135,34 +135,209 @@ var scrollVis = function() {
         .attr('opacity', 1)
 
         // Appending the x-axis to the chart
-        d3.select('g')
-            .append('g')
-            .attr('class', 'x axis')
-            .attr('transform', "translate(0," + (height + margin.top) + ")")
-            .attr('opacity', 0)
-            .call(xAxis)
+        // d3.select('g')
+        //     .append('g')
+        //     .attr('class', 'x axis')
+        //     .attr('transform', "translate(0," + (height + margin.top) + ")")
+        //     .attr('opacity', 0)
+        //     .call(xAxis)
 
-        // Appending the y-axis to the chart
-        d3.select('g')
-            .append('g')
-            .attr('class', 'y axis')
-            .attr('transform', "translate("  + (margin.left) + "," + margin.top + ")")
-            .attr('opacity', 0)
-            .call(yAxis)
+        // // Appending the y-axis to the chart
+        // d3.select('g')
+        //     .append('g')
+        //     .attr('class', 'y axis')
+        //     .attr('transform', "translate("  + (margin.left) + "," + margin.top + ")")
+        //     .attr('opacity', 0)
+        //     .call(yAxis)
 
-        var bar = d3.select('g').selectAll('.bar') //select all bars
-            .data(bacteria) //append the data
-        .enter().append('rect') // for each bar, add a rectangle svg with class "bar"
-            .attr('class', 'bar')
-            .attr('opacity', 0)
-            .attr('y', function(d) {return y(d.Penicilin);})
-            .attr('x', function(d) {return x(nameShorten(d.Bacteria));}) // maps our data to each bin
-            .attr('height', function(d) { 
-                return height - y(d.Penicilin); // d3 calculates the height from the *top* of the chart
-            })                                                              // therefore we need to take the height - bar height to flip the chart
-            .attr('width', x.rangeBand()) // since we defined an ordinal scale above, this automatically sets width to each column width
-            .attr('transform', 'translate(0 ,'+ margin.top +')')
-            .attr('fill', function(d) {return staining(d['Gram Staining'])}) // changes the color based on gram staining
+        // var bar = d3.select('g').selectAll('.bar') //select all bars
+        //     .data(bacteria) //append the data
+        // .enter().append('rect') // for each bar, add a rectangle svg with class "bar"
+        //     .attr('class', 'bar')
+        //     .attr('opacity', 0)
+        //     .attr('y', function(d) {return y(d.Penicilin);})
+        //     .attr('x', function(d) {return x(nameShorten(d.Bacteria));}) // maps our data to each bin
+        //     .attr('height', function(d) { 
+        //         return height - y(d.Penicilin); // d3 calculates the height from the *top* of the chart
+        //     })                                                              // therefore we need to take the height - bar height to flip the chart
+        //     .attr('width', x.rangeBand()) // since we defined an ordinal scale above, this automatically sets width to each column width
+        //     .attr('transform', 'translate(0 ,'+ margin.top +')')
+        //     .attr('fill', function(d) {return staining(d['Gram Staining'])}) // changes the color based on gram staining
+
+            // Setup data
+            var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0]];
+
+            // Setup settings for graphic
+            var canvas_width = 500;
+            var canvas_height = 300;
+            var padding = 30;  // for chart edges
+
+            // Create scale functions
+            var xScale = d3.scale.linear()  // xScale is width of graphic
+                            .domain([0, d3.max(dataset, function(d) {
+                                return d[0];  // input domain
+                            })])
+                            .range([padding, canvas_width - padding * 2]); // output range
+
+            var yScale = d3.scale.linear()  // yScale is height of graphic
+                            .domain([0, d3.max(dataset, function(d) {
+                                return d[1];  // input domain
+                            })])
+                            .range([canvas_height - padding, padding]);  // remember y starts on top going down so we flip
+
+            // Define X axis
+            var xAxis = d3.svg.axis()
+                            .scale(xScale)
+                            .orient("bottom")
+                            .ticks(5);
+
+            // Define Y axis
+            var yAxis = d3.svg.axis()
+                            .scale(yScale)
+                            .orient("left")
+                            .ticks(5);
+
+            // Create SVG element
+            var svg = d3.select("h3")  // This is where we put our vis
+                .append("svg")
+                .attr("width", canvas_width)
+                .attr("height", canvas_height)
+
+            // Create Circles
+            svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle")  // Add circle svg
+                .attr("cx", function(d) {
+                    return xScale(d[0]);  // Circle's X
+                })
+                .attr("cy", function(d) {  // Circle's Y
+                    return yScale(d[1]);
+                })
+                .attr("r", 2);  // radius
+
+            // Add to X axis
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (canvas_height - padding) +")")
+                .call(xAxis);
+
+            // Add to Y axis
+            svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + padding +",0)")
+                .call(yAxis);
+            
+            // On click, update with new data
+            // "#c, #d, #e, #f, #g, #a, #b, #c2"
+            $(document).ready(function() {
+              $('.my_button').click(function() {
+                alert($(this).val());
+              });
+            });
+
+            d3.select("#update")
+                .on("click", function() {
+                    console.log("Clicked");
+                    dataset = [[1,130.81], [2,146.83], [3,164.81], [4,174.61], [5,196.00], [6,220.00], [7,246.94], [8,261.63]];
+
+                    // Update scale domains
+                    xScale.domain([0, d3.max(dataset, function(d) {
+                        return d[0]; })]);
+                    yScale.domain([0, d3.max(dataset, function(d) {
+                        return d[1]; })]);
+
+                    // Update circles
+                    svg.selectAll("circle")
+                        .data(dataset)  // Update with new data
+                        .transition()  // Transition from old to new
+                        .duration(1000)  // Length of animation
+                        .each("start", function() {  // Start animation
+                            d3.select(this)  // 'this' means the current element
+                                .attr("fill", "red")  // Change color
+                                .attr("r", 5);  // Change size
+                        })
+                        .delay(function(d, i) {
+                            return i / dataset.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                        })
+                        //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                        .attr("cx", function(d) {
+                            return xScale(d[0]);  // Circle's X
+                        })
+                        .attr("cy", function(d) {
+                            return yScale(d[1]);  // Circle's Y
+                        })
+                        .each("end", function() {  // End animation
+                            d3.select(this)  // 'this' means the current element
+                                .transition()
+                                .duration(500)
+                                .attr("fill", "black")  // Change color
+                                .attr("r", 2);  // Change radius
+                        });
+
+                        // Update X Axis
+                        svg.select(".x.axis")
+                            .transition()
+                            .duration(1000)
+                            .call(xAxis);
+
+                        // Update Y Axis
+                        svg.select(".y.axis")
+                            .transition()
+                            .duration(100)
+                            .call(yAxis);
+                });
+            d3.select("#reset")
+                .on("click", function() {
+                    console.log("Clicked");
+                    dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0]];
+
+                    // Update scale domains
+                    xScale.domain([0, d3.max(dataset, function(d) {
+                        return d[0]; })]);
+                    yScale.domain([0, d3.max(dataset, function(d) {
+                        return d[1]; })]);
+
+                    // Update circles
+                    svg.selectAll("circle")
+                        .data(dataset)  // Update with new data
+                        .transition()  // Transition from old to new
+                        .duration(1000)  // Length of animation
+                        .each("start", function() {  // Start animation
+                            d3.select(this)  // 'this' means the current element
+                                .attr("fill", "red")  // Change color
+                                .attr("r", 5);  // Change size
+                        })
+                        .delay(function(d, i) {
+                            return i / dataset.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                        })
+                        //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                        .attr("cx", function(d) {
+                            return xScale(d[0]);  // Circle's X
+                        })
+                        .attr("cy", function(d) {
+                            return yScale(d[1]);  // Circle's Y
+                        })
+                        .each("end", function() {  // End animation
+                            d3.select(this)  // 'this' means the current element
+                                .transition()
+                                .duration(500)
+                                .attr("fill", "black")  // Change color
+                                .attr("r", 2);  // Change radius
+                        });
+
+                        // Update X Axis
+                        svg.select(".x.axis")
+                            .transition()
+                            .duration(1000)
+                            .call(xAxis);
+
+                        // Update Y Axis
+                        svg.select(".y.axis")
+                            .transition()
+                            .duration(100)
+                            .call(yAxis);
+                });
     };
 
   /**
