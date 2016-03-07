@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>INFO 474</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Lato' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="bacteria.css"/>
+    <link rel="stylesheet" type="text/css" href="stylish.css"/>
     <script src="jquery-1.12.0.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="components.js"></script>
@@ -31,25 +31,24 @@
         </section>
         <section class="step">
           <div class="title">Data Visualization</div>
-            And is a weird antibiotic in general.
         </section>
       </div>
-      <button onclick="frequencyScatterplot()">Update!</button>
-        <button id="click">Click</button>
+        <button id="click">Update</button>
       <div id='vis'></div>
       <div id='vis2'></div>
       <h3></h3>
 
       <script type="text/javascript">
     // Setup data
-            var dataset = [];  // Initialize empty array
-            var numDataPoints = 15;  // Number of dummy data points
-            var maxRange = Math.random() * 1000;  // Max range of new values
-            for(var i=0; i<numDataPoints; i++) {
-                var newNumber1 = Math.floor(Math.random() * maxRange);  // New random integer
-                var newNumber2 = Math.floor(Math.random() * maxRange);  // New random integer
-                dataset.push([newNumber1, newNumber2]);  // Add new number to array
-            }
+            // var dataset = [];  // Initialize empty array
+            // var numDataPoints = 15;  // Number of dummy data points
+            // var maxRange = Math.random() * 1000;  // Max range of new values
+            // for(var i=0; i<numDataPoints; i++) {
+            //     var newNumber1 = Math.floor(Math.random() * maxRange);  // New random integer
+            //     var newNumber2 = Math.floor(Math.random() * maxRange);  // New random integer
+            //     dataset.push([newNumber1, newNumber2]);  // Add new number to array
+            // }
+            var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0]];
 
             // Setup settings for graphic
             var canvas_width = 500;
@@ -115,14 +114,18 @@
             // On click, update with new data
             d3.select("#click")
                 .on("click", function() {
-                    var numValues = dataset.length;  // Get original dataset's length
-                    var maxRange = Math.random() * 1000;  // Get max range of new values
-                    dataset = [];  // Initialize empty array
-                    for(var i=0; i<numValues; i++) {
-                        var newNumber1 = Math.floor(Math.random() * maxRange);  // Random int for x
-                        var newNumber2 = Math.floor(Math.random() * maxRange);  // Random int for y
-                        dataset.push([newNumber1, newNumber2]);  // Add new numbers to array
-                    }
+                    console.log("Clicked");
+                    // var numValues = dataset.length;  // Get original dataset's length
+                    // var maxRange = Math.random() * 1000;  // Get max range of new values
+                    // dataset = [];  // Initialize empty array
+                    // for(var i=0; i<numValues; i++) {
+                    //     var newNumber1 = Math.floor(Math.random() * maxRange);  // Random int for x
+                    //     var newNumber2 = Math.floor(Math.random() * maxRange);  // Random int for y
+                    //     dataset.push([newNumber1, newNumber2]);  // Add new numbers to array
+                    // }
+//   var updatedData = [[1,130.81], [2,146.83], [3,164.81], [4,174.61], [5,196.00], [6,220.00], [7,246.94], [8,261.63]];
+
+                    dataset = [[1,130.81], [2,146.83], [3,164.81], [4,174.61], [5,196.00], [6,220.00], [7,246.94], [8,261.63]];
 
                     // Update scale domains
                     xScale.domain([0, d3.max(dataset, function(d) {
