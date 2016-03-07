@@ -70,9 +70,13 @@ document.onkeydown = function(e){
 }
 
 function actOnKey(key) { 
-    console.log(key);
+    console.log('key:'+key);
+
     if(!pressed_keys[key])
         playNote(key, frequencyOf[key]);
     else
         stopNote(key);
+
+    //activate key on ui
+    $('#note'+key).toggleClass('active');
 }

@@ -1,5 +1,14 @@
 var scales = {
-    'Cmaj' : ['C','D','E','F','G','A','B','C'],
+    'Cmaj' : [
+        {'note': 'C', 'color': 'red'},
+        {'note': 'D', 'color': 'orange'},
+        {'note': 'E', 'color': 'blue'},
+        {'note': 'F', 'color': 'green'},
+        {'note': 'G', 'color': 'violet'},
+        {'note': 'A', 'color': 'green'},
+        {'note': 'B', 'color': 'pink'},
+        {'note': 'C', 'color': 'purple'}
+    ],
     'Cmin' : ['I','J','K','L','M','N','O','P']
 };
 
@@ -16,8 +25,8 @@ function loadKeyboard() {
 
     //iterate through notes in selected scale to add to keyboard
     for (var i = 0; i < currScale.length; i++) {
-        var currNote = currScale[i];
-        var note = $('<div class=key id=note' + currNote + '>' + '<span>' + currNote + '</span>' + '</div>');
+        var noteObj = currScale[i];
+        var note = $('<button class=\"key ui inverted button massive ' + noteObj['color'] + '\" id=\"note' + i + '\">' + noteObj['note'] + '</button>');
         note.click(notePress.bind(undefined, i));
         note.prop("index",i);
         note.appendTo('#keyboardContainer');
@@ -32,5 +41,3 @@ $(document).ready(function() {
     changeScale(defaultScale);
     loadKeyboard();
 });
-
-
