@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>INFO 474</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="bacteria.css"/>
+    <script src="jquery-1.12.0.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="components.js"></script>
+    <script type="text/javascript" src="scroller.js"></script>
+  </head>
+  <body>
+    <div id='graphic'>
+      <div id='sections'>
+        <section class="step">
+          <div class="title">An Introduction to Music Theory</div>
+        </section>
+        <section class="step">
+          <div class="title">What is a scale?</div>
+            In music theory, a scale is any set of musical notes ordered by fundamental frequency or pitch. A scale ordered by increasing pitch is an ascending scale, and a scale ordered by decreasing pitch is a descending scale. Some scales contain different pitches when ascending than when descending.
+        </section>
+        <section class="step">
+          <div class="title">Diatonic scale</div>
+            A diatonic scale is one that has no added sharps or flats other than what is in the key signature -- the scale's interval pattern could be played using only the white keys on the piano. 
+        </section>
+        <section class="step">
+          <div class="title">Songs with these notes in them</div>
+            Neutral Milk Hotel - Aeroplane Over the Sea<br>
+            Bob Dylan - Don't Think Twice It's All Right
+        </section>
+        <section class="step">
+          <div class="title">Data Visualization</div>
+            And is a weird antibiotic in general.
+        </section>
+      </div>
+      <button onclick="frequencyScatterplot()">Update!</button>
+        <button id="click">Click</button>
+      <div id='vis'></div>
+      <div id='vis2'></div>
+      <h3></h3>
+
+      <script type="text/javascript">
+    // Setup data
+            var dataset = [];  // Initialize empty array
+            var numDataPoints = 15;  // Number of dummy data points
+            var maxRange = Math.random() * 1000;  // Max range of new values
+            for(var i=0; i<numDataPoints; i++) {
+                var newNumber1 = Math.floor(Math.random() * maxRange);  // New random integer
+                var newNumber2 = Math.floor(Math.random() * maxRange);  // New random integer
+                dataset.push([newNumber1, newNumber2]);  // Add new number to array
+            }
+
+            // Setup settings for graphic
+            var canvas_width = 500;
+            var canvas_height = 300;
+            var padding = 30;  // for chart edges
+
+            // Create scale functions
+            var xScale = d3.scale.linear()  // xScale is width of graphic
+                            .domain([0, d3.max(dataset, function(d) {
+                                return d[0];  // input domain
+                            })])
+                            .range([padding, canvas_width - padding * 2]); // output range
+
+            var yScale = d3.scale.linear()  // yScale is height of graphic
+                            .domain([0, d3.max(dataset, function(d) {
+                                return d[1];  // input domain
+                            })])
+                            .range([canvas_height - padding, padding]);  // remember y starts on top going down so we flip
+
+            // Define X axis
+            var xAxis = d3.svg.axis()
+                            .scale(xScale)
+                            .orient("bottom")
+                            .ticks(5);
+
+            // Define Y axis
+            var yAxis = d3.svg.axis()
+                            .scale(yScale)
+                            .orient("left")
+                            .ticks(5);
+
+            // Create SVG element
+            var svg = d3.select("h3")  // This is where we put our vis
+                .append("svg")
+                .attr("width", canvas_width)
+                .attr("height", canvas_height)
+
+            // Create Circles
+            svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle")  // Add circle svg
+                .attr("cx", function(d) {
+                    return xScale(d[0]);  // Circle's X
+                })
+                .attr("cy", function(d) {  // Circle's Y
+                    return yScale(d[1]);
+                })
+                .attr("r", 2);  // radius
+
+            // Add to X axis
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (canvas_height - padding) +")")
+                .call(xAxis);
+
+            // Add to Y axis
+            svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + padding +",0)")
+                .call(yAxis);
+            
+            // On click, update with new data
+            d3.select("#click")
+                .on("click", function() {
+                    var numValues = dataset.length;  // Get original dataset's length
+                    var maxRange = Math.random() * 1000;  // Get max range of new values
+                    dataset = [];  // Initialize empty array
+                    for(var i=0; i<numValues; i++) {
+                        var newNumber1 = Math.floor(Math.random() * maxRange);  // Random int for x
+                        var newNumber2 = Math.floor(Math.random() * maxRange);  // Random int for y
+                        dataset.push([newNumber1, newNumber2]);  // Add new numbers to array
+                    }
+
+                    // Update scale domains
+                    xScale.domain([0, d3.max(dataset, function(d) {
+                        return d[0]; })]);
+                    yScale.domain([0, d3.max(dataset, function(d) {
+                        return d[1]; })]);
+
+                    // Update circles
+                    svg.selectAll("circle")
+                        .data(dataset)  // Update with new data
+                        .transition()  // Transition from old to new
+                        .duration(1000)  // Length of animation
+                        .each("start", function() {  // Start animation
+                            d3.select(this)  // 'this' means the current element
+                                .attr("fill", "red")  // Change color
+                                .attr("r", 5);  // Change size
+                        })
+                        .delay(function(d, i) {
+                            return i / dataset.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+                        })
+                        //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+                        .attr("cx", function(d) {
+                            return xScale(d[0]);  // Circle's X
+                        })
+                        .attr("cy", function(d) {
+                            return yScale(d[1]);  // Circle's Y
+                        })
+                        .each("end", function() {  // End animation
+                            d3.select(this)  // 'this' means the current element
+                                .transition()
+                                .duration(500)
+                                .attr("fill", "black")  // Change color
+                                .attr("r", 2);  // Change radius
+                        });
+
+                        // Update X Axis
+                        svg.select(".x.axis")
+                            .transition()
+                            .duration(1000)
+                            .call(xAxis);
+
+                        // Update Y Axis
+                        svg.select(".y.axis")
+                            .transition()
+                            .duration(100)
+                            .call(yAxis);
+                });
+
+      </script>
+      <div id='extra-spacing'></div>
+    </div>
+  </body>
+</html>
