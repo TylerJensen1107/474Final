@@ -64,9 +64,12 @@ document.onkeydown = function(e){
     e = e || window.event;
     var key = e.which || e.keyCode;
     console.log(key);
-    if(key >= 49 && key <= 57) {
+    if (key >= 49 && key <= 57) {
         actOnKey(key - 49);
-    } else if(key == 48) {
+        var dataset2 = [[1, 130.81], [2, 146.83], [3, 164.81], [4, 174.61], [5, 196.00], [6, 220.00], [7, 246.94], [8, 261.63]];
+        console.log("Hi!");
+        setupVis(dataset2);
+    } else if (key == 48) {
         actOnKey(9)
     }
 }
