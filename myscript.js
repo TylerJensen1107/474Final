@@ -24,6 +24,8 @@ for(var i = 0; i < 10; i++) {
     gains[i] = vca;
 }
 
+var chords = ["I", "ii", "iii", "IV", "V", "vi"];
+
 var frequencyOf = {0 : 130.81,
                 1: 146.83,
                 2: 164.81,
@@ -77,6 +79,25 @@ function actOnKey(key) {
     else
         stopNote(key);
 
+    console.log(pressed_keys);
+    checkChord();
+
     //activate key on ui
     $('#note'+key).toggleClass('active');
+}
+
+
+function checkChord() {
+
+    for(var i = 0; i < 8; i++) {
+        if(pressed_keys[i]) {
+            for(var j = 1; j < 3; j++) {
+                if(pressed_keys[i] && pressed_keys[i + j*2] && j == 2) {
+                    console.log(i + ' ' + j + ' ' + pressed_keys);
+                    console.log(chords[i] + "CHORD");
+                    //$('')
+                }
+            }
+        }
+    }
 }
