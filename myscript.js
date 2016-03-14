@@ -91,13 +91,15 @@ function checkChord() {
 
     for(var i = 0; i < 8; i++) {
         if(pressed_keys[i]) {
+            var triad = false;
             for(var j = 1; j < 3; j++) {
-                if((pressed_keys[i % 8] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 8] || pressed_keys[i + j*2]) && j == 2) {
+                if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]) && j == 2 && triad) {
                     console.log(i + ' ' + j + ' ' + pressed_keys);
                     console.log(chords[i] + "CHORD");
                     $('#chord').html(chords[i]);
                     return;
                 }
+                if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]))  triad = true;
             }
         }
     }

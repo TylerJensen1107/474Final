@@ -34,9 +34,10 @@ function loadKeyboard() {
 
     var chordContainer = $('<button></button>');
     chordContainer.prop("id", "chord");
-    //chordContainer.
-    chordContainer.addClass('key ui inverted button massive black');
+    chordContainer.addClass('key ui inverted button massive black active');
     chordContainer.html("chord");
+    chordContainer.onclick = null;
+    chordContainer.css("cursor", "default");
     chordContainer.appendTo('#keyboardContainer');
 }
 
