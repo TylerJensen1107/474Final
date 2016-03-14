@@ -125,13 +125,26 @@ var scrollVis = function() {
    */
   setupVis = function(bacteria) {
 
-    d3.select('g')
-        .append('text')
-        .attr('class', 'bacteria-title')
-        .attr('x', width / 10)
-        .attr('y', height / 2)
-        .text('Content') 
-        .attr('opacity', 1)
+    // d3.select('g')
+    //     .append('text')
+    //     .attr('class', 'bacteria-title')
+    //     .attr('x', width / 10)
+    //     .attr('y', height / 2)
+    //     .text('Content') 
+    //     .attr('opacity', 1)
+    var div = d3.select('#staff')
+            .append('svg')
+            .attr('width', 750)
+            .attr('height', 200)
+            .attr('id','staffDiv');
+
+            div.append('image')
+              //.attr('x', width / 10)
+              //.attr('y', height / 2)
+              .attr('width', 750)
+              .attr('height', 200)
+              .attr('opacity', 1)
+              .attr('xlink:href','staff.PNG');
 
         // Setup data
         var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0]];
@@ -321,6 +334,9 @@ var scrollVis = function() {
     // time the active section changes
     activateFunctions[0] = showTitle;
     activateFunctions[1] = showPenicilin;
+    for(var j = 2; j < 8; j++) {
+      activateFunctions[j] = function(){};
+    }
     //activateFunctions[2] = showStreptomycin;
 
     // updateFunctions are called while
@@ -329,7 +345,7 @@ var scrollVis = function() {
     // Most sections do not need to be updated
     // for all scrolling and so are set to
     // no-op functions.
-    for(var i = 0; i < 2; i++) {
+    for(var i = 0; i < 8; i++) {
       updateFunctions[i] = function() {};
     }
   };
@@ -368,10 +384,10 @@ var scrollVis = function() {
 
   function showPenicilin() {
     console.log(g);
-    g.selectAll(".bacteria-title")
-      .transition()
-      .duration(0)
-      .attr("opacity", 0);
+    // g.selectAll(".bacteria-title")
+    //   .transition()
+    //   .duration(0)
+    //   .attr("opacity", 0);
 
     g.selectAll(".axis")
       .transition()

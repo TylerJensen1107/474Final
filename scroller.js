@@ -93,11 +93,12 @@ function scroller() {
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);
 
     if (currentIndex !== sectionIndex) {
+      drawStaff(currentIndex);
       dispatch.active(sectionIndex);
       currentIndex = sectionIndex;
     }
 
-    console.log(currentIndex);
+    //console.log(currentIndex);
 
     var prevIndex = Math.max(sectionIndex - 1, 0);
     var prevTop = sectionPositions[prevIndex];
