@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var margin = {top: 15, right: 20, bottom: 50, left: 20};
+  var margin = {top: 15, right: 20, bottom: 20, left: 20};
   var width = 700;
   var height = 520;
 
@@ -19,7 +19,8 @@ $(document).ready(function() {
       .attr('opacity', 1)
 
   // Setup data
-  var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0]];
+  var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0], [9,0], [10,0]];
+  // var dataset = [['C',0], ['D',0], ['E',0], ['F',0], ['G',0], ['A',0], ['B',0], ['H',0], ['I',0], ['J',0]];
 
   // Setup settings for graphic
   var canvas_width = 500;
@@ -43,7 +44,7 @@ $(document).ready(function() {
   var xAxis = d3.svg.axis()
                   .scale(xScale)
                   .orient("bottom")
-                  .ticks(5);
+                  .ticks(10);
 
   // Define Y axis
   var yAxis = d3.svg.axis()
@@ -127,59 +128,60 @@ $(document).ready(function() {
       .duration(100)
       .call(yAxis);
 
-/**
- * scrollVis - encapsulates
- * all the code for the visualization
- * using reusable charts pattern:
- * http://bost.ocks.org/mike/chart/
- */
-var scrollVis = function() {
-  // Keep track of which visualization
-  // we are on and which was the last
-  // index activated. When user scrolls
-  // quickly, we want to call all the
-  // activate functions that they pass.
-  var lastIndex = -1;
-  var activeIndex = 0;
+  /**
+   * scrollVis - encapsulates
+   * all the code for the visualization
+   * using reusable charts pattern:
+   * http://bost.ocks.org/mike/chart/
+   */
+  var scrollVis = function() {
+    // Keep track of which visualization
+    // we are on and which was the last
+    // index activated. When user scrolls
+    // quickly, we want to call all the
+    // activate functions that they pass.
+    var lastIndex = -1;
+    var activeIndex = 0;
 
-  // Sizing for the grid visualization
-  var squareSize = 6;
-  var squarePad = 2;
-  var numPerRow = width / (squareSize + squarePad);
+    // Sizing for the grid visualization
+    var squareSize = 6;
+    var squarePad = 2;
+    var numPerRow = width / (squareSize + squarePad);
 
 
-    // set margins and width/height of parent chart
-    // Makes a log scale of our data (as we know is slightly skewed)
-    // Maps our data values -> bar height
-    var y = d3.scale.log()
-                .range([height, margin.top + margin.bottom]);
+      // set margins and width/height of parent chart
+      // Makes a log scale of our data (as we know is slightly skewed)
+      // Maps our data values -> bar height
+      var y = d3.scale.log()
+                  .range([height, margin.top + margin.bottom]);
 
-    // Allows us to map each ordinal value to a particular column
-    // Maps our ordinal bacteria names -> column
-    var x = d3.scale.ordinal()
-                .rangeBands([margin.left, width], 0.225);
+      // Allows us to map each ordinal value to a particular column
+      // Maps our ordinal bacteria names -> column
+      var x = d3.scale.ordinal()
+                  .rangeBands([margin.left, width], 0.225);
 
-    // Initializes our x-axis and adds it to the bottom of the chart
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
+      // Initializes our x-axis and adds it to the bottom of the chart
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
 
-    // Initializes our y-axis and adds it to the left of the chart
-    // Adds tick marks for our values in increments of 10x
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .ticks(10, " ")
-        .orient('left');
+      // Initializes our y-axis and adds it to the left of the chart
+      // Adds tick marks for our values in increments of 10x
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .ticks(10, " ")
+          .orient('left');
 
-  // When scrolling to a new section
-  // the activation function for that
-  // section is called.
-  var activateFunctions = [];
-  // If a section has an update function
-  // then it is called while scrolling
-  // through the section with the current
-  // progress through the section.
-  var updateFunctions = [];
+    // When scrolling to a new section
+    // the activation function for that
+    // section is called.
+    var activateFunctions = [];
+    // If a section has an update function
+    // then it is called while scrolling
+    // through the section with the current
+    // progress through the section.
+    var updateFunctions = [];
+  };
 
   /**
    * chart
@@ -208,81 +210,6 @@ var scrollVis = function() {
       setupVis(dataset);
 
     });
-  };
-
-  setupVis(dataset);
-
-  /**
-   * setupSections - each section is activated
-   * by a separate function. Here we associate
-   * these functions to the sections based on
-   * the section's index.
-   *
-   */
-  // setupSections = function() {
-  //   // activateFunctions are called each
-  //   // time the active section changes
-  //   activateFunctions[0] = showTitle;
-  //   activateFunctions[1] = showPenicilin;
-  //   //activateFunctions[2] = showStreptomycin;
-
-  //   // updatseFunctions are called while
-  //   // in a particular section to update
-  //   // the scroll progres in that section.
-  //   // Most sections do not need to be updated
-  //   // for all scrolling and so are set to
-  //   // no-op functions.
-  //   // for(var i = 0; i < 2; i++) {
-  //   //   updateFunctions[i] = function() {};
-  //   // }
-  // };
-  
-  // function showTitle() {
-  //   g.selectAll(".bacteria-title")
-  //     .transition()
-  //     .duration(600)
-  //     .attr("opacity", 1);
-
-  //   g.selectAll(".axis")
-  //     .transition()
-  //     .duration(600)
-  //     .attr("opacity", 0);
-
-  //   g.selectAll(".bar")
-  //     .transition()
-  //     .duration(600)
-  //     .attr("opacity", 0);
-  // }
-
-  // function showPenicilin() {
-  //   console.log(g);
-  //   g.selectAll(".bacteria-title")
-  //     .transition()
-  //     .duration(0)
-  //     .attr("opacity", 0);
-
-  //   g.selectAll(".axis")
-  //     .transition()
-  //     .duration(600)
-  //     .attr("opacity", 1.0);
-
-  //   g.selectAll(".bar")
-  //     .transition()
-  //     .duration(600)
-  //     .attr("opacity", 1.0);
-  // }
-
-  /**
-   * UPDATE FUNCTIONS
-   *
-   * These will be called within a section
-   * as the user scrolls through it.
-   *
-   * We use an immediate transition to
-   * update visual elements based on
-   * how far the user has scrolled
-   *
-   */
 
   /**
    * activate -
@@ -299,124 +226,238 @@ var scrollVis = function() {
     lastIndex = activeIndex;
   };
 
-  /**
-   * update
-   *
-   * @param index
-   * @param progress
-   */
-  // chart.update = function(index, progress) {
-  //   updateFunctions[index](progress);
-  // };
-
-  // return chart function
   return chart;
 };
 
-/**
- * setupVis - creates initial elements for all
- * sections of the visualization.
- *
- * @param wordData - data object for each word.
- * @param fillerCounts - nested data that includes
- *  element for each filler word type.
- * @param histData - binned histogram data
- */
-function setupVis(dataset) {
-  console.log("Clicked");
-  // dataset = [[1,130.81], [2,146.83], [3,164.81], [4,174.61], [5,196.00], [6,220.00], [7,246.94], [8,261.63]];
+  /**
+   * setupVis - creates initial elements for all
+   * sections of the visualization.
+   *
+   * @param wordData - data object for each word.
+   * @param fillerCounts - nested data that includes
+   *  element for each filler word type.
+   * @param histData - binned histogram data
+   */
+  function setupVis(dataset) {
+    console.log("Clicked");
+    // dataset = [[1,130.81], [2,146.83], [3,164.81], [4,174.61], [5,196.00], [6,220.00], [7,246.94], [8,261.63]];
 
-  // Update scale domains
-  xScale.domain([0, d3.max(dataset, function(d) {
-      return d[0]; })]);
-  yScale.domain([0, d3.max(dataset, function(d) {
-      return d[1]; })]);
+    // Update scale domains
+    xScale.domain([0, d3.max(dataset, function(d) {
+        return d[0]; })]);
+    yScale.domain([0, d3.max(dataset, function(d) {
+        return d[1]; })]);
 
-  // Update circles
-  svg.selectAll("circle")
-      .data(dataset)  // Update with new data
-      .transition()  // Transition from old to new
-      .duration(1000)  // Length of animation
-      .each("start", function() {  // Start animation
-          d3.select(this)  // 'this' means the current element
-              .attr("fill", "red")  // Change color
-              .attr("r", 5);  // Change size
-      })
-      .delay(function(d, i) {
-          return i / dataset.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
-      })
-      //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
-      .attr("cx", function(d) {
-          return xScale(d[0]);  // Circle's X
-      })
-      .attr("cy", function(d) {
-          return yScale(d[1]);  // Circle's Y
-      })
-      .each("end", function() {  // End animation
-          d3.select(this)  // 'this' means the current element
-              .transition()
-              .duration(500)
-              .attr("fill", "black")  // Change color
-              .attr("r", 2);  // Change radius
-      });
+    // Update circles
+    svg.selectAll("circle")
+        .data(dataset)  // Update with new data
+        .transition()  // Transition from old to new
+        .duration(1000)  // Length of animation
+        .each("start", function() {  // Start animation
+            d3.select(this)  // 'this' means the current element
+                .attr("fill", "red")  // Change color
+                .attr("r", 5);  // Change size
+        })
+        .delay(function(d, i) {
+            return i / dataset.length * 500;  // Dynamic delay (i.e. each item delays a little longer)
+        })
+        //.ease("linear")  // Transition easing - default 'variable' (i.e. has acceleration), also: 'circle', 'elastic', 'bounce', 'linear'
+        .attr("cx", function(d) {
+            return xScale(d[0]);  // Circle's X
+        })
+        .attr("cy", function(d) {
+            return yScale(d[1]);  // Circle's Y
+        })
+        .each("end", function() {  // End animation
+            d3.select(this)  // 'this' means the current element
+                .transition()
+                .duration(500)
+                .attr("fill", "black")  // Change color
+                .attr("r", 2);  // Change radius
+        });
 
-      // Update X Axis
-      svg.select(".x.axis")
-          .transition()
-          .duration(1000)
-          .call(xAxis);
+        // Update X Axis
+        svg.select(".x.axis")
+            .transition()
+            .duration(1000)
+            .call(xAxis);
 
-      // Update Y Axis
-      svg.select(".y.axis")
-          .transition()
-          .duration(100)
-          .call(yAxis);
-}
+        // Update Y Axis
+        svg.select(".y.axis")
+            .transition()
+            .duration(100)
+            .call(yAxis);
+  }
 
-/**
- * display - called once data
- * has been loaded.
- * sets up the scroller and
- * displays the visualization.
- *
- * @param data - loaded tsv data
- */
-function display(data) {
-  // create a new plot and
-  // display it
-  console.log(data);
-  var plot = scrollVis();
-  d3.select("#vis")
-    .datum(data)
-    .call(plot);
+  /**
+   * display - called once data
+   * has been loaded.
+   * sets up the scroller and
+   * displays the visualization.
+   *
+   * @param data - loaded tsv data
+   */
+  function display(data) {
+    // create a new plot and
+    // display it
+    console.log(data);
+    var plot = scrollVis();
+    d3.select("#vis")
+      .datum(data)
+      .call(plot);
 
-  // setup scroll functionality
-  var scroll = scroller()
-    .container(d3.select('#graphic'));
+    // setup scroll functionality
+    var scroll = scroller()
+      .container(d3.select('#graphic'));
 
-  // pass in .step selection as the steps
-  scroll(d3.selectAll('.step'));
+    // pass in .step selection as the steps
+    scroll(d3.selectAll('.step'));
 
-  // setup event handling
-  scroll.on('active', function(index) {
-    // highlight current step text
-    d3.selectAll('.step')
-      .style('opacity',  function(d,i) { return i == index ? 1 : 0.1; });
+    // setup event handling
+    scroll.on('active', function(index) {
+      // highlight current step text
+      d3.selectAll('.step')
+        .style('opacity',  function(d,i) { return i == index ? 1 : 0.1; });
 
-    // activate current section
-    plot.activate(index);
-  });
+      // activate current section
+      plot.activate(index);
+    });
 
-  // scroll.on('progress', function(index, progress){
-  //   plot.update(index, progress);
-  // });
-}
+    // scroll.on('progress', function(index, progress){
+    //   plot.update(index, progress);
+    // });
+  }
 
-// load data and display
-d3.csv("a1-burtin.csv", display);
+  // load data and display
+  d3.csv("a1-burtin.csv", display);
 
-function type(d) {
-  d.Penicilin = +d.Penicilin; // coerces the string to number
-  return d;
-}
+  function type(d) {
+    d.Penicilin = +d.Penicilin; // coerces the string to number
+    return d;
+  }
+
+/////////////////////////
+  var context = new AudioContext();
+  pressed_keys = {};
+  oscillators = {};
+  gains = {};
+
+  for(var i = 0; i < 10; i++) {
+      var vco = context.createOscillator();
+      vco.type = vco.SINE;
+      vco.frequency.value = 0;
+      vco.start(0);
+      oscillators[i] = vco;
+  }
+
+  for(var i = 0; i < 10; i++) {
+      var vca = context.createGain();
+      vca.gain.value = 0;
+      
+
+      /* Connections */
+      oscillators[i].connect(vca);
+      vca.connect(context.destination);
+      vca.gain.value = 0;
+
+      gains[i] = vca;
+  }
+
+  var chords = ["I", "ii", "iii", "IV", "V", "vi"];
+
+  var frequencyOf = {0 : 130.81,
+                  1: 146.83,
+                  2: 164.81,
+                  3: 174.61,
+                  4: 196.00,
+                  5: 220.00,
+                  6: 246.94,
+                  7: 261.63,
+                  8: 293.66,
+                  9: 329.63
+              };
+
+  var isEmpty = function(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
+  function playNote(note, frequency) {
+      console.log(note);
+    oscillators[note].frequency.value = frequency;
+    gains[note].gain.value = 1;
+    pressed_keys[note] = true;
+  }
+
+  function stopNote(note, _) {
+    delete pressed_keys[note];
+    gains[note].gain.value = 0;
+  }
+
+  function keyListener(event){ 
+      event = event || window.event; 
+      var key = event.key || event.which || event.keyCode;
+      console.log(key);
+  }
+
+  document.onkeydown = function(e){
+      e = e || window.event;
+      var key = e.which || e.keyCode;
+      var numKey = key - 49;
+
+      if (key >= 49 && key <= 57) {
+          actOnKey(numKey);
+          var keyFreq = frequencyOf[numKey];
+
+          // Check if the key is already selected
+          if (dataset[numKey][1] > 0) {
+            dataset[numKey] = [numKey + 1, 0];
+            setupVis(dataset);
+          } else if (dataset[numKey][1] == 0) {
+            dataset[numKey] = [numKey + 1, keyFreq];
+            setupVis(dataset);
+          }
+      } else if (key == 48) {
+          actOnKey(9);
+          numKey = 9;
+          // Check if the key is already selected
+          if (dataset[numKey][1] > 0) {
+            dataset[numKey] = [numKey + 1, 0];
+            setupVis(dataset);
+          } else if (dataset[numKey][1] == 0) {
+            dataset[numKey] = [numKey + 1, keyFreq];
+            setupVis(dataset);
+          }
+      }
+  }
+
+  function actOnKey(key) { 
+      console.log('key:'+key);
+
+      if(!pressed_keys[key])
+          playNote(key, frequencyOf[key]);
+      else
+          stopNote(key);
+
+      console.log(pressed_keys);
+      checkChord();
+
+      //activate key on ui
+      $('#note'+key).toggleClass('active');
+  }
+
+
+  function checkChord() {
+
+      for(var i = 0; i < 8; i++) {
+          if(pressed_keys[i]) {
+              for(var j = 1; j < 3; j++) {
+                  if(pressed_keys[i] && pressed_keys[i + j*2] && j == 2) {
+                      console.log(i + ' ' + j + ' ' + pressed_keys);
+                      console.log(chords[i] + "CHORD");
+                      //$('')
+                  }
+              }
+          }
+      }
+  }
 });
