@@ -14,8 +14,6 @@
 // for(var i = 0; i < 10; i++) {
 //     var vca = context.createGain();
 //     vca.gain.value = 0;
-    
-
 //     /* Connections */
 //     oscillators[i].connect(vca);
 //     vca.connect(context.destination);
@@ -64,12 +62,9 @@
 //     e = e || window.event;
 //     var key = e.which || e.keyCode;
 //     console.log(key);
-//     if (key >= 49 && key <= 57) {
+//     if(key >= 49 && key <= 57) {
 //         actOnKey(key - 49);
-//         var dataset2 = [[1, 130.81], [2, 146.83], [3, 164.81], [4, 174.61], [5, 196.00], [6, 220.00], [7, 246.94], [8, 261.63]];
-//         console.log("Hi!");
-//         setupVis(dataset2);
-//     } else if (key == 48) {
+//     } else if(key == 48) {
 //         actOnKey(9)
 //     }
 // }
@@ -94,13 +89,17 @@
 
 //     for(var i = 0; i < 8; i++) {
 //         if(pressed_keys[i]) {
+//             var triad = false;
 //             for(var j = 1; j < 3; j++) {
-//                 if(pressed_keys[i] && pressed_keys[i + j*2] && j == 2) {
+//                 if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]) && j == 2 && triad) {
 //                     console.log(i + ' ' + j + ' ' + pressed_keys);
 //                     console.log(chords[i] + "CHORD");
-//                     //$('')
+//                     $('#chord').html(chords[i]);
+//                     return;
 //                 }
+//                 if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]))  triad = true;
 //             }
 //         }
 //     }
+//     $('#chord').html("chord");
 // }

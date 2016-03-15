@@ -32,9 +32,13 @@ function loadKeyboard() {
         note.appendTo('#keyboardContainer');
     }
 
-    // var chordContainer = $('button');
-    // chordContainer.addClass('key ui inverted label massive');
-    // chordContainer.appendTo('#keyboardContainer');
+    var chordContainer = $('<button></button>');
+    chordContainer.prop("id", "chord");
+    chordContainer.addClass('key ui inverted button massive black active');
+    chordContainer.html("chord");
+    chordContainer.onclick = null;
+    chordContainer.css("cursor", "default");
+    chordContainer.appendTo('#keyboardContainer');
 }
 
 function notePress(index, event) {
