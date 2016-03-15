@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var margin = {top: 15, right: 20, bottom: 20, left: 20};
-  var width = 700;
-  var height = 520;
+  var width = 1500;
+  var height = 750;
 
   // main svg used for visualization
   var svg = null;
@@ -20,11 +20,10 @@ $(document).ready(function() {
 
   // Setup data
   var dataset = [[1,0], [2,0], [3,0], [4,0], [5,0], [6,0], [7,0], [8,0], [9,0], [10,0]];
-  // var dataset = [['C',0], ['D',0], ['E',0], ['F',0], ['G',0], ['A',0], ['B',0], ['H',0], ['I',0], ['J',0]];
 
   // Setup settings for graphic
-  var canvas_width = 500;
-  var canvas_height = 300;
+  var canvas_width = 800;
+  var canvas_height = 400;
   var padding = 30;  // for chart edges
 
   // Create scale functions
@@ -450,14 +449,18 @@ $(document).ready(function() {
 
       for(var i = 0; i < 8; i++) {
           if(pressed_keys[i]) {
+              var triad = false;
               for(var j = 1; j < 3; j++) {
-                  if(pressed_keys[i] && pressed_keys[i + j*2] && j == 2) {
+                  if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]) && j == 2 && triad) {
                       console.log(i + ' ' + j + ' ' + pressed_keys);
                       console.log(chords[i] + "CHORD");
-                      //$('')
+                      $('#chord').html(chords[i]);
+                      return;
                   }
+                  if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]))  triad = true;
               }
           }
       }
-  }
+      $('#chord').html("chord");
+}
 });
