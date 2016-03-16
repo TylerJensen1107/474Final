@@ -1,3 +1,29 @@
+#header-container {
+    width: 100%;
+    margin: 0px;
+    display: block;
+    height: 300px;
+    background-color: #778899;
+    margin: 150px 150px 0px 0px;
+    font-size: 30pt;
+    margin-bottom: 150px;
+}
+
+.pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+}
+
+#chordsPics {
+    text-align: center;
+}
+
+#header {
+    vertical-align: center;
+}
+
 #sections {
 	font-family: 'Lato', sans-serif;
 	position: relative;
@@ -5,14 +31,14 @@
 	width: 80%;
 	top: 0px;
 	z-index: 90;
-	margin: 0 5%;
+	margin: 5% 5%;
 	color: #414141;
     font-size: 15pt;
+    text-align: justify;
 }
 
 .step {
- 	margin-bottom: 200px;
- 	margin-top: 200px;
+ 	margin-bottom: 150px;
 }
 
 #extra-spacing {
