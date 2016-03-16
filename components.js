@@ -91,7 +91,7 @@ $(document).ready(function() {
   svg.selectAll("circle")
       .data(dataset)  // Update with new data
       .transition()  // Transition from old to new
-      .duration(1000)  // Length of animation
+      .duration(500)  // Length of animation
       .each("start", function() {  // Start animation
           d3.select(this)  // 'this' means the current element
               .attr("fill", "red")  // Change color

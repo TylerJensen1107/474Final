@@ -2,11 +2,12 @@
 	font-family: 'Lato', sans-serif;
 	position: relative;
 	display: inline-block;
-	width: 50%;
+	width: 80%;
 	top: 0px;
 	z-index: 90;
 	margin: 0 5%;
 	color: #414141;
+    font-size: 15pt;
 }
 
 .step {
@@ -18,7 +19,7 @@
 	height: 400px;
 }
 
-#vis {
+/*#vis {
 	display: inline-block;
 	position: fixed;
 	top: 60px;
@@ -27,7 +28,11 @@
 
 	height: 600px;
 	width: 750px;
-	/*background-color: #ddd;*/
+	background-color: #ddd;
+}*/
+
+h3 {
+    text-align: center;
 }
 
 .title {
@@ -37,6 +42,7 @@
 	font-size: 2.0em;
 	color: #414141;
 	margin-bottom: 15px;
+    text-align: center;
 }
 
 .axis {
