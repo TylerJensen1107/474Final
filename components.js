@@ -1,4 +1,26 @@
 $(document).ready(function() {
+  var scales = {
+    'Cmaj' : [
+        {'note': 'C', 'color': 'red'},
+        {'note': 'D', 'color': 'orange'},
+        {'note': 'E', 'color': 'blue'},
+        {'note': 'F', 'color': 'green'},
+        {'note': 'G', 'color': 'violet'},
+        {'note': 'A', 'color': 'purple'},
+        {'note': 'B', 'color': 'pink'},
+        {'note': 'C', 'color': 'red'},
+        {'note': 'D', 'color': 'orange'},
+        {'note': 'E', 'color': 'blue'}
+    ],
+    'Cmin' : ['I','J','K','L','M','N','O','P']
+  };
+
+  var currScale;
+  var defaultScale = 'Cmaj';
+
+  changeScale(defaultScale);
+  loadKeyboard();
+
   var margin = {top: 15, right: 20, bottom: 20, left: 20};
   var width = 1500;
   var height = 750;
@@ -418,32 +440,23 @@ $(document).ready(function() {
       console.log(key);
       if (key >= 49 && key <= 57) {
           actOnKey(numKey);
-          var keyFreq = frequencyOf[numKey];
-          // Check if the key is already selected
-          if (dataset[numKey][1] > 0) {
-            dataset[numKey] = [numKey + 1, 0];
-            setupVis(dataset);
-          } else if (dataset[numKey][1] == 0) {
-            dataset[numKey] = [numKey + 1, keyFreq];
-            setupVis(dataset);
-          }
       } else if (key == 48) {
           numKey = 9;
           actOnKey(numKey);
-
-          // Check if the key is already selected
-          if (dataset[numKey][1] > 0) {
-            dataset[numKey] = [numKey + 1, 0];
-            setupVis(dataset);
-          } else if (dataset[numKey][1] == 0) {
-            dataset[numKey] = [numKey + 1, keyFreq];
-            setupVis(dataset);
-          }
       }
   }
 
   function actOnKey(key) { 
       console.log('key:'+key);
+
+      var keyFreq = frequencyOf[key];
+      if (dataset[key][1] > 0) {
+        dataset[key] = [key + 1, 0];
+        setupVis(dataset);
+      } else if (dataset[key][1] == 0) {
+        dataset[key] = [key + 1, keyFreq];
+        setupVis(dataset);
+      }
 
       if(!pressed_keys[key])
           playNote(key, frequencyOf[key]);
@@ -475,4 +488,27 @@ $(document).ready(function() {
     }
     $('#chord').html("chord");
   }
+
+  function changeScale(scale) {
+      currScale = scales[scale];
+  }
+
+  function loadKeyboard() {
+      //clear keyboard
+      $('#keyboardContainer').html("");
+
+      //iterate through notes in selected scale to add to keyboard
+      for (var i = 0; i < currScale.length; i++) {
+          var noteObj = currScale[i];
+          var note = $('<button class=\"key ui inverted button massive ' + noteObj['color'] + '\" id=\"note' + i + '\">' + noteObj['note'] + '</button>');
+          note.click(notePress.bind(undefined, i));
+          note.prop("index",i);
+          note.appendTo('#keyboardContainer');
+      }
+  }
+
+  function notePress(index, event) {
+      actOnKey(index);
+  }
+
 });
