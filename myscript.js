@@ -82,7 +82,7 @@ function actOnKey(key) {
     console.log(pressed_keys);
     checkChord();
 
-    //activate key on ui
+    console.log(key);
     $('#note'+key).toggleClass('active');
 }
 
