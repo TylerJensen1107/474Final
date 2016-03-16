@@ -66,6 +66,8 @@ $(document).ready(function() {
           return xScale(d[0]);  // Circle's X
       })
       .attr("cy", function(d) {  // Circle's Y
+          console.log("D: " + d);
+          console.log("D1: " + d[1]);
           return yScale(d[1]);
       })
       .attr("r", 2);  // radius
@@ -319,7 +321,7 @@ $(document).ready(function() {
         .style('opacity',  function(d,i) { return i == index ? 1 : 0.1; });
         console.log("Hey2");
       // activate current section
-      plot.activate(index);
+      // plot.activate(index);
     });
 
     // scroll.on('progress', function(index, progress){
@@ -413,10 +415,10 @@ $(document).ready(function() {
       var key = e.which || e.keyCode;
       var numKey = key - 49;
 
+      console.log(key);
       if (key >= 49 && key <= 57) {
           actOnKey(numKey);
           var keyFreq = frequencyOf[numKey];
-
           // Check if the key is already selected
           if (dataset[numKey][1] > 0) {
             dataset[numKey] = [numKey + 1, 0];
@@ -426,8 +428,9 @@ $(document).ready(function() {
             setupVis(dataset);
           }
       } else if (key == 48) {
-          actOnKey(9);
           numKey = 9;
+          actOnKey(numKey);
+
           // Check if the key is already selected
           if (dataset[numKey][1] > 0) {
             dataset[numKey] = [numKey + 1, 0];
@@ -456,7 +459,6 @@ $(document).ready(function() {
 
 
   function checkChord() {
-
     for(var i = 0; i < 8; i++) {
         if(pressed_keys[i]) {
             var triad = false;
@@ -472,5 +474,5 @@ $(document).ready(function() {
         }
     }
     $('#chord').html("chord");
-}
+  }
 });
