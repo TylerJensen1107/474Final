@@ -5,9 +5,11 @@ var scales = {
         {'note': 'E', 'color': 'blue'},
         {'note': 'F', 'color': 'green'},
         {'note': 'G', 'color': 'violet'},
-        {'note': 'A', 'color': 'green'},
+        {'note': 'A', 'color': 'purple'},
         {'note': 'B', 'color': 'pink'},
-        {'note': 'C', 'color': 'purple'}
+        {'note': 'C', 'color': 'red'},
+        {'note': 'D', 'color': 'orange'},
+        {'note': 'E', 'color': 'blue'}
     ],
     'Cmin' : ['I','J','K','L','M','N','O','P']
 };
@@ -31,14 +33,6 @@ function loadKeyboard() {
         note.prop("index",i);
         note.appendTo('#keyboardContainer');
     }
-
-    var chordContainer = $('<button></button>');
-    chordContainer.prop("id", "chord");
-    chordContainer.addClass('key ui inverted button massive black active');
-    chordContainer.html("chord");
-    chordContainer.onclick = null;
-    chordContainer.css("cursor", "default");
-    chordContainer.appendTo('#keyboardContainer');
 }
 
 function notePress(index, event) {

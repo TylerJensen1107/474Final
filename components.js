@@ -301,9 +301,9 @@ $(document).ready(function() {
     // display it
     console.log(data);
     var plot = scrollVis();
-    d3.select("#vis")
-      .datum(data)
-      .call(plot);
+    // d3.select("#vis")
+    //   .datum(data)
+    //   .call(plot);
 
     // setup scroll functionality
     var scroll = scroller()
@@ -317,7 +317,7 @@ $(document).ready(function() {
       // highlight current step text
       d3.selectAll('.step')
         .style('opacity',  function(d,i) { return i == index ? 1 : 0.1; });
-
+        console.log("Hey2");
       // activate current section
       plot.activate(index);
     });
@@ -398,6 +398,16 @@ $(document).ready(function() {
       console.log(key);
   }
 
+  chart.activate = function(index) {
+    activeIndex = index;
+    var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
+    var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
+    scrolledSections.forEach(function(i) {
+      //activateFunctions[i]();
+    });
+    lastIndex = activeIndex;
+  };
+
   document.onkeydown = function(e){
       e = e || window.event;
       var key = e.which || e.keyCode;
@@ -447,20 +457,20 @@ $(document).ready(function() {
 
   function checkChord() {
 
-      for(var i = 0; i < 8; i++) {
-          if(pressed_keys[i]) {
-              var triad = false;
-              for(var j = 1; j < 3; j++) {
-                  if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]) && j == 2 && triad) {
-                      console.log(i + ' ' + j + ' ' + pressed_keys);
-                      console.log(chords[i] + "CHORD");
-                      $('#chord').html(chords[i]);
-                      return;
-                  }
-                  if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]))  triad = true;
-              }
-          }
-      }
-      $('#chord').html("chord");
+    for(var i = 0; i < 8; i++) {
+        if(pressed_keys[i]) {
+            var triad = false;
+            for(var j = 1; j < 3; j++) {
+                if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]) && j == 2 && triad) {
+                    console.log(i + ' ' + j + ' ' + pressed_keys);
+                    console.log(chords[i] + "CHORD");
+                    $('#chord').html(chords[i]);
+                    return;
+                }
+                if((pressed_keys[i % 7] || pressed_keys[i]) && (pressed_keys[(i + j*2) % 7] || pressed_keys[i + j*2]))  triad = true;
+            }
+        }
+    }
+    $('#chord').html("chord");
 }
 });

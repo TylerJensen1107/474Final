@@ -27,7 +27,9 @@
             
             A scale is any set of notes in order of frequency, spanning an octave. In Western music, the two most common scales are the major and minor scales, comprised of 8 notes each. Major scales sound happy, and minor scales sound sad. 
 
-            On the piano, a C major scale is played on only the white notes, in ascending order.
+            On the piano, a C major scale is played on only the white notes, in ascending order.<br> 
+
+            Try playing all the notes in the C major scale above by either click them, or using the keyboard numbers 1 through 0. The notes will continue to play until you stop them by clicking or pressing the same key again.
         </section>
         <section class="step">
           <div class="title">II. What is in a chord?</div>
@@ -40,9 +42,11 @@
               <img id="triad" src="cMajTriad.png"><br>
               In a C major triad, the C is the root, the E is the third and the G is the fifth.<br>
 
-              In a G major tried, the G is the root, the B is the third and the D is the fifth. Remember that. The C major scale (CDEFGAB) loops back to C at the end of the octave (CDEFGABCDEF...).<br><br>
+              In a G major triad, the G is the root, the B is the third and the D is the fifth. Remember that the C major scale (CDEFGAB) loops back to C at the end of the octave (CDEFGABCDEF...)<br><br>
 
-            Note: An octave is C to C (or D to D, etc.), where the two pitches sound the same note but one is higher in pitch.
+            Try playing a C, E, and G. The next section will explain with the 'I' means. <br>
+
+            Note: An octave is C to C (or D to D, etc.), where the two pitches sound like the same note but one is higher in pitch.
             </p>
         
             </p>
@@ -62,6 +66,7 @@
         <section class="step">
           <div class="title">IV. Chord Relationships</div>
             All songs and pieces of music contain chord progressions, which are series of chords that are strung together. In classical music, composers use the (I) chord as a "home" chord and always come back to it. The (V) chord sounds tense, and the listener's ear wants to hear a return to (I). In the finale of a symphony, you can count on composers writing many (V) to (I) chord progressions. This relationship is also found in most other genres. Most commonly, the end of musical phrases will be on (V) and the following phrase will begin on (I). <br><br>
+            <img src="home.png"><br>
         </section>
         <section class="step">
           <div class="title">V. Songs with these notes in them</div>
@@ -72,6 +77,15 @@
         </section>
         <section class="step">
           <div class="title">VI. Data Visualization</div>
+          <button id="update">Update</button>
+          <button id="reset">Reset</button>
+          <p>
+            Note how the frequency of the notes doesn't go up linearly. This is because when determining the notes in a major scale, you take all the notes that exist (C C# D D# E F G...) and follow a pattern of steps. This pattern goes W W H W W W H, where W means you skip a note (whole step) and H means you add the next note (half step). <br>
+            So in the C major scale, you start at C, skip a note (whole step) to D, skip a note to E, then half step to F. This is represented in the graph as the frequency change from the third note (E) to the fourth note (F) is less than before.
+          </p>
+          <p>
+            Something else to note is that you can see the difference between a major chord and a minor chord from the graph. Take C major for example. The distance from the root note to the second note in the chord (the 'third') is two whole steps, and the distance from the 'third' to the 'fifth' is a half step and a whole step. A minor chord (D minor) by comparison, is flipped, so the distance from the first to the third is a step and half, while the third to the fifth is two whole steps.
+          </p>
           <h3></h3>
         </section>
       </div>

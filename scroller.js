@@ -5,7 +5,11 @@
  * to.
  *
  */
+
+var chordOn = false;
+
 function scroller() {
+  console.log("Hey");
   var windowHeight;
   var container = d3.select('body');
   // event dispatcher
@@ -95,6 +99,19 @@ function scroller() {
     if (currentIndex !== sectionIndex) {
       dispatch.active(sectionIndex);
       currentIndex = sectionIndex;
+      if(currentIndex > 1 && !chordOn) {
+            var chordContainer = $('<button></button>');
+            chordContainer.prop("id", "chord");
+            chordContainer.addClass('key ui inverted button massive black active');
+            chordContainer.html("chord");
+            chordContainer.onclick = null;
+            chordContainer.css("cursor", "default");
+            chordContainer.appendTo('#keyboardContainer');
+            chordOn = true;
+      } else if(chordOn && currentIndex < 2) {
+           $("#chord").remove();
+           chordOn = false;
+      }
     }
 
     console.log(currentIndex);
