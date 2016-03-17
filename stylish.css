@@ -8,6 +8,14 @@
     margin-bottom: 150px;
 }
 
+span {
+    text-align: center;
+}
+
+strong {
+    font-size: 16pt;
+}
+
 .pic {
     display: block;
     margin-left: auto;
@@ -43,18 +51,6 @@
 #extra-spacing {
 	height: 400px;
 }
-
-/*#vis {
-	display: inline-block;
-	position: fixed;
-	top: 60px;
-	z-index: 1;
-	margin-left: 0;
-
-	height: 600px;
-	width: 750px;
-	background-color: #ddd;
-}*/
 
 h3 {
     text-align: center;
